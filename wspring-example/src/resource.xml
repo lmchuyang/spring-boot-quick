@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+ 
+  <!-- 该 BeanPostProcessor 将自动起作用，对标注 @Autowired 的 Bean 进行自动注入 -->     
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>   
+		<bean id="resource" class="com.purang.test.ResourceBean"
+		 init-method="init" destroy-method="destroy">
+		 <property name="file" value="D:/test.txt" />
+		 </bean>
+		<bean id="dependentBean" class="com.purang.test.DependentBean" 
+		 init-method="init" destroy-method="destroy" depends-on="resource">
+		 </bean>
+</beans>

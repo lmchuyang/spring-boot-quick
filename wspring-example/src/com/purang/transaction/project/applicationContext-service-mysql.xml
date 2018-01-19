@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+      xmlns:aop="http://www.springframework.org/schema/aop"  
+      xsi:schemaLocation="  
+          http://www.springframework.org/schema/beans  
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+       http://www.springframework.org/schema/tx  
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
+          http://www.springframework.org/schema/aop  
+          http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">  
+   <!-- 配置式 事务管理 -->
+      <bean id="userService" class="com.purang.transaction.project.ConfigUserServiceImpl">  
+    <property name="userDao" ref="userDao"/>  
+    <property name="addressService" ref="addressService"/>  
+	</bean>  
+	<bean id="addressService" class="com.purang.transaction.project.ConfigAddressServiceImpl">  
+	    <property name="addressDao" ref="addressDao"/>  
+	</bean>
+	
+	<tx:advice id="txadvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED" isolation="READ_COMMITTED"></tx:method>
+			<tx:method name="*" propagation="REQUIRED" isolation="READ_COMMITTED" read-only="true"></tx:method>
+		</tx:attributes>
+	</tx:advice>
+	<!-- AOP 切面编程开始 -->
+	<aop:config>
+			<aop:pointcut id="serviceMethod" expression="execution(* com.purang.transaction.project.*.*(..))" />
+			<aop:advisor pointcut-ref="serviceMethod" advice-ref="txadvice"/>
+	</aop:config>
+   <aop:config>
+			<aop:pointcut id="servicead" expression="execution(* com.purang.transaction.service.*.*(..))"/>
+			<aop:advisor pointcut-ref="servicead" advice-ref="txadvice"/>
+	</aop:config>
+	
+</beans>
