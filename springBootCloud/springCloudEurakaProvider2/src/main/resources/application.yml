@@ -1,0 +1,20 @@
+server:
+  port: 5023
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peer2:5012/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+  instance:
+    preferIpAddress: true
+spring:
+  application:
+    name: springCloudEurakaProvider
+#两个生产者应用史是一样的，这样微服务之间调用的时候只以做负载均衡，无需指定某个应用名
+#logging:
+#  level:
+#    org.exampledriven.eureka.customer.shared.CustomerServiceFeignClient: FULL
+#lease 租期时间，不定时发送心跳包消息，如果长时间未能更新租期时间，服务就为抛弃该服务实例，注册中心会当成无用服务

@@ -1,0 +1,18 @@
+server:
+  port: 8787
+spring:
+  application:
+    name: dev
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    server:
+      enable-self-preservation: false
+    serviceUrl:
+      defaultZone: http://peer1:5011/eureka
+  instance:
+    hostname: peer2
+#peer1、peer2和peer3需要在hosts文件中设置为127.0.0.1，在生产环境中可以写真实的域名
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}

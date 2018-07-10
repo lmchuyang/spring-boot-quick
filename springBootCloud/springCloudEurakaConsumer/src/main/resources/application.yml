@@ -1,0 +1,20 @@
+server:
+  port: 5080
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:5011/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+  instance:
+    preferIpAddress: true
+spring:
+  application:
+    name: springCloudEurakaConsumer
+
+#logging:
+#  level:
+#    org.exampledriven.eureka.customer.shared.CustomerServiceFeignClient: FULL
+#lease 租期时间，不定时发送心跳包消息，如果长时间未能更新租期时间，服务就为抛弃该服务实例，注册中心会当成无用服务

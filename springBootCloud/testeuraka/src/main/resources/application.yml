@@ -1,0 +1,25 @@
+server:
+  port: 8711
+spring:
+  application:
+    name: test-dev
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    server:
+      enable-self-preservation: false
+    serviceUrl:
+      defaultZone: http://peer2:5012/eureka
+  instance:
+    hostname: peer1
+#peer1、peer2和peer3需要在hosts文件中设置为127.0.0.1，在生产环境中可以写真实的域名
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+#三个横杠表示一个新的文件环境配置,同一文件写多个文件配置环境必须写spring:application:name=dev属性名称
+---
+spring:
+  profiles:
+    active: dev
+#用这种方式启动容器加载配置文件，多实例同一个镜像启动多个容器不同的端口号，达到高可用的目的
+#docker run -d -p 8787:8787 ca7f456ae49c java -jar app.jar --spring.profiles.active=test-server

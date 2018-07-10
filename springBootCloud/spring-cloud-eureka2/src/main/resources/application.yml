@@ -1,0 +1,25 @@
+server:
+  port: 5012
+spring:
+  application:
+    name: euraka-server
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    server:
+      enable-self-preservation: false
+    serviceUrl:
+      defaultZone: http://peer1:5011/eureka/,http://peer3:5013/eureka/
+  instance:
+    hostname: peer2
+#peer1、peer2和peer3需要在hosts文件中设置为127.0.0.1，在生产环境中可以写真实的域名
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+ #1 这里peer1、peer2和peer3需要在hosts文件中设置为127.0.0.1，在生产环境中可以写真实的域名
+ #注册中心集群模式，一定要自身注册到服务上，被其它节点发现
+ #如果是单eureka server的环境，就将eureka.client.serviceUrl.defaultZone设置为本机的服务注册地址，
+ #同时需要设置eureka.client.registerWithEureka和eureka.client.fetchRegistry为false，以防止自己注册自己。同时设置应用名为eureka-server
+# enableSelfPreservation 自我保护机制。Eureka Server在运行期间，会统计心跳失败的比例在15分钟之内是否低于85%，如果出现低于的情况（在单机调试的时候很容易满足，实际在生产环境上通常是由于网络不稳定导致），
+# Eureka Server会将当前的实例注册信息保护起来，同时提示这个警告
+#3 spring.application.name或eureka.instance.appname必须一致；否则unavailable-replicas 界面显示是不可到达，或服务不可用
