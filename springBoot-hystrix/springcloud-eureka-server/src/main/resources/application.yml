@@ -1,0 +1,18 @@
+server:
+  port: 5012
+spring:
+  application:
+    name: euraka-server
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    server:
+      enable-self-preservation: false
+    serviceUrl:
+      defaultZone: http://peer1:5012/eureka/
+  instance:
+    hostname: peer1
+    prefer-ip-address: true
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}

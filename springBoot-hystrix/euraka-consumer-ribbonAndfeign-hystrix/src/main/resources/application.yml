@@ -1,0 +1,39 @@
+server:
+  port: 5080
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:5012/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+  instance:
+    preferIpAddress: true
+spring:
+  application:
+    name: springCloudEurakaConsumer
+#使用如下配置开启，即可实现重试：再加Feign下面的ribbon配置，就是 Ribbon+RestTemplate的重试机制   
+#  cloud:
+#    loadbalancer:
+#      retry: 
+#      enabled: true
+#开启hystrix功能    
+feign:
+  hystrix:
+    enabled: true
+#logging:
+#  level:
+#    org.exampledriven.eureka.customer.shared.CustomerServiceFeignClient: FULL
+#lease 租期时间，不定时发送心跳包消息，如果长时间未能更新租期时间，服务就为抛弃该服务实例，注册中心会当成无用服务
+# 1,Ribbon+RestTemplate的重试
+#对于整合了Ribbon的RestTemplate，例如一个RestTemplate添加了@LoadBalanced 注解
+#在此基础上，使用如下配置，即可实现重试：
+#Feign的重试与Ribbon重试整合后， 只需使用Ribbon的重试配置即可,两种重试配置一样，所以下面配置至少要重试4次
+ribbon:
+ # 同一实例最大重试次数，不包括首次调用，配置后本实例至少会执行两次
+  MaxAutoRetries: 1
+ # 重试其他实例的最大重试次数，不包括首次所选的server，配置后本实例和其它服务注册实例至少会执行两次
+  MaxAutoRetriesNextServer: 1
+ # 是否所有操作都进行重试
+  OkToRetryOnAllOperations: false
