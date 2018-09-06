@@ -1,0 +1,33 @@
+put  http://192.168.11.237:9200/tms_site_index/
+{
+  "mappings": {
+    "doc": {
+      "properties": {
+        "address": {
+          "type": "text"
+        },
+		 "province": {
+          "type": "text"
+        },
+		 "site_name": {
+          "type": "text"
+        },
+		 "type": {
+          "type": "text"
+        }, 
+		"lng": {
+		 "type": "float"
+		 },
+		 "lat": {
+		 "type": "float"
+		 },
+		"id": {
+          "type": "long"
+         },
+        "geo": {
+          "type": "geo_point"
+        }
+      }
+    }
+  }
+}

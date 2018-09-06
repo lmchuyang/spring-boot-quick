@@ -1,0 +1,35 @@
+{
+  "template": "tms_site*",
+  "settings": {
+    "index.refresh_interval": "5s"
+  },
+  "mappings": {
+    "_default_": {
+      "_all": {"enabled": true, "omit_norms": true},
+      "dynamic_templates": [ {
+        "message_field": {
+          "match": "message",
+          "match_mapping_type": "text",
+          "mapping": {
+            "type": "text", "index": "analyzed", "omit_norms": true
+          }
+        }
+      }, {
+        "string_fields": {
+          "match": "*",
+          "match_mapping_type": "text",
+          "mapping": {
+            "type": "text", "index": "analyzed", "omit_norms": true,
+            "fields": {
+              "raw": {"type": "text", "index": "not_analyzed", "ignore_above": 256}
+            }
+          }
+        }
+      } ],
+      "properties": {
+        "@version": { "type": "text", "index": "not_analyzed" },
+        "lonlat": { "type": "geo_point" }
+      }
+    }
+  }
+}
