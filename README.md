@@ -1,5 +1,5 @@
 # lmc
-springcloud服务的相差项目测试
+springcloud服务的相关项目测试
 
 
 elasticsearch  大部分能跑的代码都 放在测试包下面，
