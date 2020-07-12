@@ -16,7 +16,7 @@
     values(#{post.type},#{post.amount})
     </insert>
 
-    <update id="updateTrade"  parameterType="cloud.model.PositionDO">
+    <update id="updatePosition"  parameterType="cloud.model.PositionDO">
          update position SET
         <if test="type != null and type != ''">
             type=#{post.type},
