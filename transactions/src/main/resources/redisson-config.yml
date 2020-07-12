@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: microservice-druid #在eureka里显示的application的名字
+  profiles:
+    active: dev
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: cloud.model
+mapper:
+  identity: MYSQL
+  style: camelhumpAndUppercase
+  enableMethodAnnotation: true
