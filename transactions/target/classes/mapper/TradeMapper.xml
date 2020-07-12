@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.dao.TradeMapper">
+
+    <select id="getTradeList" parameterType="java.util.HashMap" resultType="cloud.model.TradeDO">
+	 select TRANSACTION_ID` as id, TRADE_ID as tradeId,VERSION as version,SECURITY_CODE as securityCode,QUANTITY as quantity,ACTION_STATUS AS  actionStatus,
+	    TRADE_TYPE as tradeType,GMT_CREATED as gmtCreated,GMT_UPDATE as gmtUpdate from trade_bill
+	 <where>
+         <if test="id != null">
+             TRANSACTION_ID #{id}
+         </if>
+         <if test="id != null">
+             TRADE_ID #{tradeId}
+         </if>
+         <if test="id != null">
+             SECURITY_CODE #{securityCode}
+         </if>
+         <if test="info != null and info != null">
+             limit #{index}, #{size}
+         </if>
+     </where>
+    </select>
+
+
+    <select id="getTrade" parameterType="java.util.HashMap" resultType="cloud.model.TradeDO">
+        select TRANSACTION_ID` as id, TRADE_ID as tradeId,VERSION as version,SECURITY_CODE as securityCode,QUANTITY as quantity,ACTION_STATUS AS  actionStatus,
+        TRADE_TYPE as tradeType,GMT_CREATED as gmtCreated,GMT_UPDATE as gmtUpdate from trade_bill
+        <where>
+            <if test="id != null">
+                TRANSACTION_ID #{id}
+            </if>
+        </where>
+    </select>
+
+
+    <insert id="insertTrade">
+    insert into trade_bill(TRADE_ID,VERSION,SECURITY_CODE,QUANTITY,ACTION_STATUS,TRADE_TYPE,GMT_CREATED,GMT_UPDATE)
+    values(#{tradeId},#{version},#{securityCode},#{quantity},#{actionStatus},#{tradeType},#{gmtCreated},#{gmtUpdate})
+    </insert>
+
+    <update id="updateTrade"  parameterType="cloud.model.TradeDO">
+         update user_first SET
+        <if test="version != null and version != ''">
+            VERSION=#{version},
+        </if>
+        <if test="securityCode != null and securityCode != ''">
+            SECURITY_CODE=#{securityCode},
+        </if>
+        <if test="quantity != null and quantity">
+            QUANTITY=#{quantity},
+        </if>
+        <if test="actionStatus != null and actionStatus != ''">
+            ACTION_STATUS=#{actionStatus},
+        </if>
+        <if test="tradeType != null and tradeType != ''">
+            TRADE_TYPE=#{tradeType},
+        </if>
+        <if test="offset != null">
+            GMT_UPDATE=#{gmtUpdate},
+        </if>
+         where TRANSACTION_ID=#{id}
+    </update>
+
+
+</mapper>

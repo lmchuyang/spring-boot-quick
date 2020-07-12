@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.dao.TradeMapper">
+
+    <select id="getPosition" resultType="cloud.model.PositionDO">
+	 select  id, type as positionType,amount  from position
+	 <where>
+         <if test="type != null">
+             type #{type}
+         </if>
+     </where>
+    </select>
+
+    <insert id="insertPosition"  parameterType="cloud.model.PositionDO">
+    insert into position(type,amount)
+    values(#{post.type},#{post.amount})
+    </insert>
+
+    <update id="updateTrade"  parameterType="cloud.model.PositionDO">
+         update position SET
+        <if test="type != null and type != ''">
+            type=#{post.type},
+        </if>
+        <if test="amount != null and amount != ''">
+            amount=#{post.amount},
+        </if>
+         where TRANSACTION_ID=#{post.id}
+    </update>
+
+
+</mapper>
