@@ -5,6 +5,7 @@
 package cloud.controller;
 
 import cloud.model.TradeDO;
+import cloud.service.TradeService;
 import cloud.service.impl.TradeServiceImpl;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ public class TradeController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    TradeServiceImpl tradeService;
+    TradeService tradeService;
 
     @RequestMapping(value = "/insert", method = RequestMethod.GET)
     @ResponseBody

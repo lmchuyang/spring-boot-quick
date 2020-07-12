@@ -27,8 +27,8 @@ spring:
         # 连接池最大阻塞等待时间（使用负值表示没有限制）
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-#    driverClassName: com.mysql.jdbc.Driver 这是MYSQL5.7包的加载方式，下面是mysql8.0+以上驱动包
-    driverClassName: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.jdbc.Driver
+#    driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/tms?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
